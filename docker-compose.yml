@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  waha:
+    image: devlikeapro/waha:latest
+    container_name: waha
+    restart: unless-stopped
+    ports:
+      - "3000:3000"   # API HTTP do WAHA
+      - "3001:3001"   # Painel web (opcional)
+    environment:
+      # Nome da sessão WhatsApp (pode mudar se quiser rodar várias)
+      WAHA_SESSION: default
+      # Idioma (apenas para logs)
+      LANG: pt_BR.UTF-8
+      # (Opcional) Configure um token para proteger a API;
+      # se definir aqui, use o mesmo token nas Credenciais do n8n.
+      WAHA_API_KEY: 123456789
+    volumes:
+      - ./waha-data:/app/data  # Persistência de sessões
+
+networks:
+  default:
+    driver: bridge
